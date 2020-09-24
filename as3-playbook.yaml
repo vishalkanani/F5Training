@@ -1,0 +1,25 @@
+---
+- name: Deploy AS3 Declaration
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+
+  vars_files:
+    - /home/ubuntu/Desktop/F5Training/creds/bigip-creds.yaml
+  
+  tasks:
+  - name: Create a JIRA issue
+    uri:
+      url: https://3.8.214.23/mgmt/shared/appsvcs/declare
+      user: "{{ bigip_user }}"
+      password: "{{ bigip_password }}"
+      method: POST
+      body: "{{ lookup('file','as3-file-declaration.json')}}"
+      force_basic_auth: yes
+      status_code: 200
+      validate_certs: no
+      body_format: json
+
+...
